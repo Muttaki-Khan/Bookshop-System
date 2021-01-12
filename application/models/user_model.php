@@ -65,6 +65,28 @@ class user_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+    ##...Get all used books and filter category wise books
+	public function get_usedbooks($limit, $offset)
+	{
+		/*=== SQL join and Data filter ===*/
+		$this->db->select('*');
+		$this->db->from('category');
+		$this->db->join('usedbooks', 'usedbooks.categoryId = category.id');
+		if(isset($_GET['ctg']))
+		{
+			$a = $_GET['ctg'];
+			$query = $this->db->where('category.tag', $a);
+			$this->db->order_by('usedbooks.id', 'DESC');
+			$this->db->where('usedbooks.status', 1);
+			$this->db->limit($limit, $offset);
+			$query = $this->db->get();
+			return $query->result();
+		}
+		$this->db->order_by('usedbooks.id', 'DESC');
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
 	#...For pagination
 	public function num_rows_books()
 	{
