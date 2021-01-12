@@ -589,6 +589,181 @@ class admin extends CI_Controller {
 			redirect('admin/ready_to_deliver');
 		}
 	}
+    /*=============================================
+					Used BOOKS
+===============================================*/
+/*================Used Books &&  All Used Books list page ===============*/
+	public function usedbooks()
+	{
+		$this->load->model('admin_model');
+		$this->load->library('pagination');
+		$config = [
+
+			'base_url' => base_url('admin/usedbooks'),
+			'per_page' => 10,
+			'total_rows'=>  $this->admin_model->num_rows_admin_books(),
+			'full_tag_open' => "<ul class='custom-pagination'>",
+			'full_tag_close' => "</ul>", 
+			'first_tag_open' => '<li>',
+			'first_tag_close' => '</li>',
+			'last_tag_open' => '<li>',
+			'last_link'=>'last',
+			'last_tag_close' => '</li>',
+			'next_tag_open' => '<li>',
+			'next_tag_close' => '</li>',
+			'prev_tag_open' => '<li>',
+			'prev_tag_close' => '</li>',
+			'cur_tag_open' => "<li class = 'active'><a>",
+			'cur_tag_close' => '</a></li>',
+		];
+		$this->pagination->initialize($config);
+
+
+		$this->load->model('admin_model');
+		$view['usedbooks'] = $this->admin_model->get_usedbooks($config['per_page'], $this->uri->segment(3));
+
+		$view['admin_view'] = "admin/usedbooks";
+		$this->load->view('layouts/admin_layout', $view);
+	}
+
+/*================ Add Used Books Page =================*/
+	public function add_usedbooks()
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+
+		/*==== Image Upload validation*/
+		$config = [
+			'upload_path'=>'./uploads/image/',
+			'allowed_types'=>'jpg|png',
+			'max_size' => '400',
+			'overwrite' => FALSE
+			];
+
+		$this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('book_name', 'Book name', 'trim|required|strip_tags[book_name]');
+		$this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[100]|strip_tags[description]');
+		$this->form_validation->set_rules('author', 'Author name', 'trim|required|strip_tags[author]');
+		$this->form_validation->set_rules('publisher', 'Publisher name', 'trim|required|strip_tags[publisher]');
+		$this->form_validation->set_rules('price', 'Price', 'trim|required|alpha_numeric_spaces|strip_tags[price]');
+		$this->form_validation->set_rules('quantity', 'Quantity', 'trim|required|numeric|strip_tags[quantity]');
+		$this->form_validation->set_rules('categoryId', 'Category', 'trim|required');
+
+
+		if(($this->form_validation->run() && $this->upload->do_upload()) == FALSE)
+		{
+
+			$view['admin_view'] = "admin/add_usedbooks";
+			$this->load->view('layouts/admin_layout', $view);
+
+		}
+		else
+		{
+			$this->load->model('admin_model');
+
+			if($this->admin_model->add_usedbooks())
+			{
+				$this->session->set_flashdata('success', 'Book added successfully');
+				redirect('admin/usedbooks');
+			}
+			else
+			{
+				print $this->db->error();
+			}
+
+		}
+	}
+   
+
+	public function usedbook_view($id)
+	{
+		$this->load->model('admin_model');
+		$view['usedbook_detail'] = $this->admin_model->get_usedbook_detail($id);
+
+		if($this->admin_model->get_usedbook_detail($id))
+		{
+			$view['admin_view'] = "admin/usedbook_view";
+			$this->load->view('layouts/admin_layout', $view);
+		}
+		else
+		{
+			$view['admin_view'] = "temp/404page";
+			$this->load->view('layouts/admin_layout', $view);
+		}
+	}
+
+	public function usedbook_edit($id)
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+		/* For geting the existing info...*/
+		$this->load->model('admin_model');
+		$view['usedbook_detail'] = $this->admin_model->get_book_detail($id);
+
+		/*==== Image Upload validation*/
+		$config = [
+			'upload_path'=>'./uploads/image/',
+			'allowed_types'=>'jpg|png',
+			'max_size' => '400',
+			'overwrite' => TRUE
+			];
+
+		$this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('book_name', 'Book name', 'trim|required|strip_tags[book_name]');
+		$this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[100]|strip_tags[description]');
+		$this->form_validation->set_rules('author', 'Author name', 'trim|required|strip_tags[author]');
+		$this->form_validation->set_rules('publisher', 'Publisher name', 'trim|required|strip_tags[publisher]');
+		$this->form_validation->set_rules('price', 'Price', 'trim|required|alpha_numeric_spaces|strip_tags[price]');
+		$this->form_validation->set_rules('quantity', 'Quantity', 'trim|required|numeric|strip_tags[quantity]');
+		$this->form_validation->set_rules('categoryId', 'Category', 'trim|required');
+
+
+		if(($this->form_validation->run() && $this->upload->do_upload()) == FALSE)
+		{
+
+			if($this->admin_model->get_book_detail($id))
+			{
+				$view['admin_view'] = "admin/book_edit";
+				$this->load->view('layouts/admin_layout', $view);
+			}
+			else
+			{
+				$view['admin_view'] = "temp/404page";
+				$this->load->view('layouts/admin_layout', $view);
+			}
+
+		}
+		else
+		{
+			$this->load->model('admin_model');
+
+			if($this->admin_model->edit_book($id, $data))
+			{
+				$this->session->set_flashdata('success', 'Book info update successfully');
+				redirect('admin/usedbooks');
+			}
+			else
+			{
+				print $this->db->error();
+			}
+
+		}
+	}
+
+	public function usedbook_delete($id)
+	{
+		$this->load->model('admin_model');
+		$this->admin_model->delete_usedbook($id);
+
+		$this->session->set_flashdata('success', '<i class= "fas fa-trash text-danger"></i> Used Book deleted successfully');
+		redirect('admin/usedbooks');
+	}
 
 
 
