@@ -43,6 +43,19 @@
 				          ?> 
 					</div>
 				</div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+					<div class="col-admin bg-success clickable-div" data-href="<?= base_url('admin/usedbooks')?>">
+						<div>
+							<i class="fas fa-book"></i>
+							<h6>Total Used Books</h6>
+						</div>
+						<?php 
+				          $this->load->model('admin_model');
+				          $count_books = count($this->admin_model->count_total_usedbooks());
+				          print $count_books;
+				          ?> 
+					</div>
+				</div>
 				<div class="col-lg-2 col-md-3 col-sm-4">
 					<div class="col-admin bg-secondary clickable-div" data-href="<?= base_url('admin/allusers')?>">
 						<div>
