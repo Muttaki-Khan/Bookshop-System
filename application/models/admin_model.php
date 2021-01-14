@@ -7,9 +7,9 @@ class admin_model extends CI_Model
 	{
 		$data = array(
 
-		'category' => $this->input->post('category'),
-		'description' => $this->input->post('description'),
-		'tag' => $this->input->post('tag')
+			'category' => $this->input->post('category'),
+			'description' => $this->input->post('description'),
+			'tag' => $this->input->post('tag')
 
 		);
 
@@ -37,9 +37,9 @@ class admin_model extends CI_Model
 	{
 		$data = array(
 
-		'category' => $this->input->post('category'),
-		'description' => $this->input->post('description'),
-		'tag' => $this->input->post('tag')
+			'category' => $this->input->post('category'),
+			'description' => $this->input->post('description'),
+			'tag' => $this->input->post('tag')
 
 		);
 
@@ -70,13 +70,13 @@ class admin_model extends CI_Model
 
 		$data = array(
 
-		'name'	=> $this->input->post('name'),
-		'contact'	=> $this->input->post('contact'),
-		'email'	=> $this->input->post('email'),
-		'address'	=> $this->input->post('address'),
-		'city'	=> $this->input->post('city'),
-		'password' => $encripted_pass,
-		'type' => $this->input->post('type')
+			'name'	=> $this->input->post('name'),
+			'contact'	=> $this->input->post('contact'),
+			'email'	=> $this->input->post('email'),
+			'address'	=> $this->input->post('address'),
+			'city'	=> $this->input->post('city'),
+			'password' => $encripted_pass,
+			'type' => $this->input->post('type')
 
 		);
 
@@ -113,7 +113,7 @@ class admin_model extends CI_Model
 		);
 
 		$insert_book = $this->db->insert('books', $data);
-        echo $this->db->last_query();
+		echo $this->db->last_query();
 		return $insert_book;
 	}
     #...Delete book
@@ -196,6 +196,34 @@ class admin_model extends CI_Model
 
 		$this->db->order_by('books.id', 'DESC');
 		$this->db->where('books.status', '1');
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+		#...Display best books
+	public function get_bestbooks($limit, $offset)
+	{	
+		/*=== SQL join ===*/
+		$this->db->select('books.id, books.book_name, books.description, books.author, books.publisher, books.quantity, books.price, books.book_image, category.category, books.sales_counter');
+
+		$this->db->from('books');
+		$this->db->join('category', 'books.categoryId = category.id');
+		$this->db->join('users', 'books.userId = users.id'); // Join 3rd table
+
+		$this->db->order_by('books.sales_counter', 'DESC');
+		$this->db->where('books.status', '1');
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	#...pagination for best seller books table
+	public function num_rows_best_books()
+	{
+		$this->db->select('*');
+		$this->db->from('books');
+
+		$this->db->order_by('books.sales_counter', 'DESC');
+
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
