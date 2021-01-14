@@ -212,6 +212,9 @@ class user_model extends CI_Model
 			'quantity' => $quantity
 
 		);
+		$query = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
+		$this->db->query($query, array($items['qty'], $items['id']));
+
 	}
 
 		$insert_order = $this->db->insert('orders', $data);
