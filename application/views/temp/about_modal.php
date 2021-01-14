@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div><p>This is an online Bookshop and E-learning application, where you can buy and sell the books. You can also find different categories of e-books, you can read it for free. But some e-books you might be buy for read.</p></div>
+        <div><p>This is an online Bookshop, where you can buy and sell the books. You can find different categories of books, you can also borrow books from this shop.</p></div>
         <div>
           <h5>Our services</h5>
           <p><i class="fas fa-circle text-secondary"></i> Sell Books</p>
@@ -22,7 +22,7 @@
         <div>
             <h6>Thanks & Regards</h6>
             <a href="#" class="text-info"><b>FSKTM GROUP 1.8</b></a>
-            <p>Founder of Bookshop and E-learning.</p>
+            <p>Founder of Bookshop</p>
         </div>
       </div>
       <div class="modal-footer">

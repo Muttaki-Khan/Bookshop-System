@@ -20,7 +20,7 @@
         <div>
             <h6>Thanks & Regards</h6>
             <a href="#" class="text-info"><b>FSKTM GROUP 1.8</b></a>
-            <p>Founder of Bookshop and E-learning.</p>
+            <p>Founder of Bookshop</p>
         </div>
       </div>
       <div class="modal-footer">
