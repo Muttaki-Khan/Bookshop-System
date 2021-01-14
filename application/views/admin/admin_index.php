@@ -10,7 +10,7 @@
 
 <div class="admin-index section-padding" style="min-height: 500px">
 	<div class="text-center">
-		<h3>Admin Deshboard</h3>
+		<h3>Admin Dashboard</h3>
 		<p>Welcome, <a href="#" class="text-primary"><?= $this->session->userdata('name') ?></a>. You have logged in as an admin. Now you can monitor the full application</p>
 	</div>
 	
