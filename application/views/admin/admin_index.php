@@ -70,19 +70,7 @@
 				          ?> 
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-3 col-sm-4">
-					<div class="col-admin bg-info clickable-div" data-href="<?= base_url('admin/ebooks')?>">
-						<div>
-							<i class="fas fa-desktop"></i>
-							<h6>Total e-books</h6>
-						</div>
-						<?php 
-				          $this->load->model('admin_model');
-				          $count_ebooks = count($this->admin_model->get_ebooks());
-				          print $count_ebooks;
-				          ?> 
-					</div>
-				</div>
+				
 				<div class="col-lg-2 col-md-3 col-sm-4">
 					<div class="col-admin bg-danger clickable-div" data-href="<?= base_url('admin/orders')?>">
 						<div>
