@@ -25,6 +25,8 @@
                         <ul id="nav">
                             <li><a href="<?= base_url()?>home">Home</a></li>
                             <li><a href="<?= base_url()?>users/all-books">Books</a></li>
+
+                            <li><a href="<?= base_url()?>users/tb-books">3B Sharing</a></li>
                             
                             
                             <!-- #Button trigger modal -->
