@@ -577,7 +577,7 @@ class admin extends CI_Controller {
 			if($this->admin_model->edit_profile($id, $data))
 			{
 				$this->session->set_flashdata('success', 'Your profile info update successfully');
-				redirect('user_home');
+				redirect('admin');
 			}
 			else
 			{
