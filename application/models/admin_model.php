@@ -400,5 +400,33 @@ class admin_model extends CI_Model
 		return $query = $this->db->where('orderId', $orderId)->update('orders', $data);
 	}
 
+	#admin details
+	public function get_admin_details($id)
+	{
+		$this->db->where('id', $id);
+		$query = $this->db->get('admin');
+		return $query->row();
+	}
+
+	public function edit_profile($id, $data)
+	{
+		$options = ['cost'=> 12];
+		$encripted_pass = password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options);
+
+		$data = array(
+			'name'	=> $this->input->post('name'),
+			'contact'	=> $this->input->post('contact'),
+			'address'	=> $this->input->post('address'),
+			'city'	=> $this->input->post('city'),
+			'password' => $encripted_pass,
+
+		);
+
+		return $query = $this->db->where('id', $id)->update('users', $data);
+	}
+
 
 }
+
+?>
+
