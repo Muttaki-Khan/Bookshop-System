@@ -253,6 +253,46 @@ class Users extends CI_Controller {
 
 	}
 
+	/*======== Book details info and all reviews =======*/
+	public function book_buy($id)
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+
+		$this->form_validation->set_rules('review', 'Review', 'trim|required|min_length[10]|htmlentities[review]');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			/*=== Book Details ===*/
+			$this->load->model('admin_model');
+			$view['book_detail'] = $this->admin_model->get_book_detail($id);
+			/*=== Get reviews ===*/
+			$this->load->model('user_model');
+			$view['reviews'] = $this->user_model->get_reviews();
+
+			if($this->admin_model->get_book_detail($id))
+			{
+				$view['user_view'] = "users/book_buy";
+				$this->load->view('layouts/user_layout', $view);
+			}
+			else
+			{
+				$view['user_view'] = "temp/404page";
+				$this->load->view('layouts/user_layout', $view);
+			}
+		}
+		else
+		{
+			$this->load->model('user_model');
+			$this->user_model->reviews($id);
+			redirect('users/book_view/'.$id.'');
+		}
+		
+
+	}
+
 	public function all_ebooks()
 	{
 		/*=== LOAD DYNAMIC CATAGORY ===*/
