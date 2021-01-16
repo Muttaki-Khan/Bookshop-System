@@ -401,10 +401,10 @@ class admin_model extends CI_Model
 	}
 
 	#admin details
-	public function get_admin_details($id)
+	public function get_user_details($id)
 	{
 		$this->db->where('id', $id);
-		$query = $this->db->get('admin');
+		$query = $this->db->get('users');
 		return $query->row();
 	}
 

@@ -546,7 +546,7 @@ class admin extends CI_Controller {
 
 		#get existing informations
 		$this->load->model('admin_model');
-		$view['admin_details'] = $this->admin_model->get_admin_details($id);
+		$view['admin_details'] = $this->admin_model->get_user_details($id);
 
 		$this->form_validation->set_rules('name', 'Name', 'trim|required|strip_tags[name]');
 		$this->form_validation->set_rules('contact', 'Contact', 'trim|required|numeric|strip_tags[contact]');
@@ -559,7 +559,7 @@ class admin extends CI_Controller {
 
 		if($this->form_validation->run() == FALSE)
 		{
-			if($this->admin_model->get_admin_details($id))
+			if($this->admin_model->get_user_details($id))
 			{
 				$view['user_view'] = "admin/edit_profile";
 				$this->load->view('layouts/user_home', $view);
