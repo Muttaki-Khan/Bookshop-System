@@ -574,10 +574,30 @@ class admin extends CI_Controller {
 		{
 			$this->load->model('admin_model');
 
+			$this->load->model('user_model');
+
 			if($this->admin_model->edit_profile($id, $data))
 			{
 				$this->session->set_flashdata('success', 'Your profile info update successfully');
+				// Update the session data
+				$user_data = $this->user_model->get_user_details($id);
+
+				if($user_data) {
+					$login_data = array(
+
+						'user_data' => $user_data,
+						'id' => $user_data->id,
+						'email' => $user_data->email,
+						'type' => $user_data->type,
+						'name' => $user_data->name,
+						'logged_in' => true
+
+					); // Data keeps in SESSION
+
+					$this->session->set_userdata($login_data);
+				}
 				redirect('admin');
+
 			}
 			else
 			{
