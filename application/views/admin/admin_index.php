@@ -7,6 +7,16 @@
 	?>
 </div>
 
+<div>
+
+	<?php
+	if($this->session->flashdata('success'))
+	{
+		print '<div class= "success-msg">'.$this->session->flashdata('success').'</div>';
+		$this->session->userdata('name');
+	}
+	?>
+</div>
 
 <div class="admin-index section-padding" style="min-height: 500px">
 	<div class="text-center">
