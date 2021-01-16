@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Owl-carousel css -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('tool/css/owl.carousel.min.css'); ?>">
     <!-- My css -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('tool/css/style.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('tool/css/style1.css'); ?>">
     
     <!-- jQuery min js -->
     <script type="text/javascript" src="<?= base_url('tool/js/jquery-3.2.1.slim.min.js'); ?>"></script>
