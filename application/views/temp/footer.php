@@ -2,14 +2,14 @@
     <div class="container">
         <div id="s-footer">
             <div class="col-md-12 col-sm-12">
-                <div class="footer-text">
-                    <p><i class="fas fa-copyright"></i> 2019 Tahmid Nishat, Inc. <br>
-                        Email: tahmid.ni7@gmail.com</p>
+            <div class="footer-text">
+                    <p><i class="fas fa-copyright"></i> Group 1.8 FSKTM <br>
+                        Email: muttakikhantet@gmail.com</p>
                 </div>
                 <div id="social-icon">
-                    <span><a href="https://www.facebook.com/iamTahmid.ni7" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a></span>
-                    <span><a href="https://github.com/tahmid-ni7" title="Github" target="_blank"><i class="fab fa-github"></i></a></span>
-                    <span><a href="https://www.instagram.com/tahmid_ni7/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a></span>
+                    <span><a href="https://www.facebook.com/habibalmuttaki" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a></span>
+                    <span><a href="https://github.com/Muttaki-Khan" title="Github" target="_blank"><i class="fab fa-github"></i></a></span>
+                    <span><a href="https://www.instagram.com/mkhan_04/?hl=en" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a></span>
                 </div>
             </div>
         </div>
