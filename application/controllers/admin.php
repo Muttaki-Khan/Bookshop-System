@@ -535,6 +535,55 @@ class admin extends CI_Controller {
 		}
 	}
 
+//-----------Admin profile edit------------//
 
+	public function edit_profile($id)
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+
+		#get existing informations
+		$this->load->model('admin_model');
+		$view['admin_details'] = $this->admin_model->get_admin_details($id);
+
+		$this->form_validation->set_rules('name', 'Name', 'trim|required|strip_tags[name]');
+		$this->form_validation->set_rules('contact', 'Contact', 'trim|required|numeric|strip_tags[contact]');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|alpha_dash|min_length[3]');
+		$this->form_validation->set_rules('repassword', 'Confirm Password',
+			'trim|required|alpha_dash|min_length[3]|matches[password]');
+		$this->form_validation->set_rules('address', 'Address', 'trim|required|max_length[80]|strip_tags[address]');
+
+		$this->form_validation->set_rules('city', 'City', 'trim|required|strip_tags[city]');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			if($this->admin_model->get_admin_details($id))
+			{
+				$view['user_view'] = "admin/edit_profile";
+				$this->load->view('layouts/user_home', $view);
+			}
+			else
+			{
+				$view['user_view'] = "temp/404page";
+				$this->load->view('layouts/user_home', $view);
+			}
+		}
+		else
+		{
+			$this->load->model('admin_model');
+
+			if($this->admin_model->edit_profile($id, $data))
+			{
+				$this->session->set_flashdata('success', 'Your profile info update successfully');
+				redirect('admin');
+			}
+			else
+			{
+				print $this->db->error();
+			}
+		}
+	}
 
 }

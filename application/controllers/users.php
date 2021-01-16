@@ -177,6 +177,42 @@ class Users extends CI_Controller {
 		$this->load->view('layouts/user_layout', $view);
 	}
 
+	public function tb_books()
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+		
+		#...Pagination code start
+		$this->load->model('user_model');
+		$this->load->library('pagination');
+		$config = [
+
+			'base_url' => base_url('users/tb_books'),
+			'per_page' => 18,
+			'total_rows'=>  $this->user_model->num_rows_books(),
+			'full_tag_open' => "<ul class='custom-pagination'>",
+			'full_tag_close' => "</ul>", 
+			'first_tag_open' => '<li>',
+			'first_tag_close' => '</li>',
+			'last_tag_open' => '<li>',
+			'last_tag_close' => '</li>',
+			'next_tag_open' => '<li>',
+			'next_tag_close' => '</li>',
+			'prev_tag_open' => '<li>',
+			'prev_tag_close' => '</li>',
+			'cur_tag_open' => "<li class = 'active'><a>",
+			'cur_tag_close' => '</a></li>',
+		];
+		$this->pagination->initialize($config);
+
+		$this->load->model('user_model');
+		$view['books'] = $this->user_model->get_books($config['per_page'], $this->uri->segment(3));
+
+		$view['user_view'] = "users/tb_books";
+		$this->load->view('layouts/user_layout', $view);
+	}
 /*======== Book details info and all reviews =======*/
 	public function book_view($id)
 	{
@@ -199,6 +235,46 @@ class Users extends CI_Controller {
 			if($this->admin_model->get_book_detail($id))
 			{
 				$view['user_view'] = "users/book_detail";
+				$this->load->view('layouts/user_layout', $view);
+			}
+			else
+			{
+				$view['user_view'] = "temp/404page";
+				$this->load->view('layouts/user_layout', $view);
+			}
+		}
+		else
+		{
+			$this->load->model('user_model');
+			$this->user_model->reviews($id);
+			redirect('users/book_view/'.$id.'');
+		}
+		
+
+	}
+
+	/*======== Book details info and all reviews =======*/
+	public function book_buy($id)
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+
+		$this->form_validation->set_rules('review', 'Review', 'trim|required|min_length[10]|htmlentities[review]');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			/*=== Book Details ===*/
+			$this->load->model('admin_model');
+			$view['book_detail'] = $this->admin_model->get_book_detail($id);
+			/*=== Get reviews ===*/
+			$this->load->model('user_model');
+			$view['reviews'] = $this->user_model->get_reviews();
+
+			if($this->admin_model->get_book_detail($id))
+			{
+				$view['user_view'] = "users/book_buy";
 				$this->load->view('layouts/user_layout', $view);
 			}
 			else
