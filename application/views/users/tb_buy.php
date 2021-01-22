@@ -26,7 +26,7 @@
 						<?php
 						if($this->session->userdata('logged_in'))
         				{
-          					print '<a href = "'.base_url().'users/book-buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Place Order</a>';
+          					print '<a href = "'.base_url().'users/tb_buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Place Order</a>';
         				}
         				else
         				{

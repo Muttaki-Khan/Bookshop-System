@@ -254,7 +254,7 @@ class Users extends CI_Controller {
 	}
 
 	/*======== Book details info and all reviews =======*/
-	public function book_buy($id)
+	public function tb_buy($id)
 	{
 		/*=== LOAD DYNAMIC CATAGORY ===*/
 		$this->load->model('admin_model');
@@ -274,7 +274,7 @@ class Users extends CI_Controller {
 
 			if($this->admin_model->get_book_detail($id))
 			{
-				$view['user_view'] = "users/book_buy";
+				$view['user_view'] = "users/tb_buy";
 				$this->load->view('layouts/user_layout', $view);
 			}
 			else

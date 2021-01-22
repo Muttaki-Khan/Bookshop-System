@@ -25,7 +25,7 @@
 						<?php print '<a href="'.base_url().'cart/add_to_cart/'.$book_detail->id.'" class="btn btn-outline-success btn-sm"><i class="fas fa-shopping-cart"></i> Add to cart</a>'; ?>
 					</div>
 					<div class="col">
-						<?php print '<a href = "'.base_url().'users/book-buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Buy via 3B sharing</a>'; ?>
+						<?php print '<a href = "'.base_url().'users/tb_buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Buy via 3B sharing</a>'; ?>
 					</div>
 					<div class="col">
 						
