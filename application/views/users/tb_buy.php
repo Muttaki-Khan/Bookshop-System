@@ -1,8 +1,9 @@
-<br>
 <div class="container">
+	<div class="text-center" id="table-header">3B Sharing</div>
+	<div class="text-center"><h3>To initiate 3B sharing, 3 buyers have to place their order</h3></div>
+	<hr>
 	<div class="row">
 		<div class="col-lg-8 col-md-9 col-sm-12" id="book-detail">
-			<div id="table-header">Book Detail</div><br>
 			<div><h5>Details of <span class="text-info"><?= strip_tags($book_detail->book_name)?></span></h5></div>
 			<br>
 			<div class="row">
@@ -14,7 +15,7 @@
 					<div>Publisher: <?= strip_tags($book_detail->publisher)?></div>
 					<div>Category: <?= strip_tags($book_detail->category)?></div>
 					<div class="text-success"><i class="fas fa-check-circle"></i> Stock: Available</div>
-					<div>Price: <?= strip_tags($book_detail->price)?>.TK</div>
+					<div>3B Sharing Price: <?= round(strip_tags($book_detail->price/3),2)?> TK</div>
 				</div>
 				<br>
 				<br>
@@ -22,10 +23,17 @@
 			<?php if($this->session->userdata('id') != $book_detail->userId): ?>
 				<div class="row">
 					<div class="col">
-						<?php print '<a href="'.base_url().'cart/add_to_cart/'.$book_detail->id.'" class="btn btn-outline-success btn-sm"><i class="fas fa-shopping-cart"></i> Add to cart</a>'; ?>
-					</div>
-					<div class="col">
-						<?php print '<a href = "'.base_url().'users/tb_buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Buy via 3B sharing</a>'; ?>
+						<?php
+						if($this->session->userdata('logged_in'))
+        				{
+          					print '<a href = "'.base_url().'users/tb_buy/'.$book_detail->id.'" class="btn btn-outline-primary btn-sm">Place Order</a>';
+        				}
+        				else
+        				{
+          				print "<div class='text-danger'>*Please log in to place order</div>";
+        				}
+
+						?>
 					</div>
 					<div class="col">
 						
@@ -41,27 +49,9 @@
 			</div>
 			</div>
 
-			<br><div class="book-description"><h5>Book description</h5><hr><p><?= nl2br(htmlentities($book_detail->description)) ?></p></div>
 			<hr>
 
-		  <?php if($this->session->userdata('logged_in'))
-		  {
-			$this->load->view("users/review");
-		  }
-		  else
-		  {
-		  	print '<div><p>Please log in to write a review. <a href="'.base_url('users/login').'" class = "btn-login">Login</a></p></div>';
-		  }
-		  ?>
-
-		</div>
-		<div class="col-lg-4 col-md-3">
-			
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12">
-			<?php $this->load->view("users/review_display"); ?>
 		</div>
 	</div>
 </div>
+
