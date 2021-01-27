@@ -77,12 +77,6 @@
                 </div>
             <?= form_close() ?>
 
-            <!--=== Login with social apps ===-->
-            <div class="col-lg-12 text-center">
-                <span><a href="#" class="btn btn-primary fb"><i class="fab fa-facebook-f"></i> Login with Facebook</a></span>&nbsp
-                <span><a href="#" class="btn btn-outline-danger"><i class="fab fa-google"></i> Login with Google &nbsp</a></span>
-            </div>
-
         </div>
     </div>
 </div>

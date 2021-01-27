@@ -61,13 +61,13 @@
       <?php print '<td><span>'.ucwords(strip_tags($book->category)).'</span></td>'; ?>
       <?php print '<td>'.ucwords(strip_tags($book->name)).'</td>'; ?>
 
-      <?php print '<td><img src = "'.strip_tags($book->book_image).'" alt = "" width="50" hieght="80" </td>';?>
+      <?php print '<td><img src = "'.strip_tags($book->book_image).'" alt = "" width="50" height="80" </td>';?>
 
 
       <?php print '<td>';
-        print '<div><a href= "'.base_url().'admin/published_books/'.$book->id.'" title= "Published the book" class="btn btn-primary btn-sm confirm-alert" data-confirm = "Are you sure to publish this book?">Published</a></div><br>';
+        print '<div><a href= "'.base_url().'admin/published_books/'.$book->id.'" title= "Published the book" class="btn btn-primary btn-sm confirm-alert" data-confirm = "Are you sure to publish this book?">Publish</a></div><br>';
 
-        print '<div><a href= "'.base_url().'admin/delete_pending_books/'.$book->id.'" title= "Delete" class="btn btn-danger btn-sm delete" data-confirm = "Are you sure to delete this book, which is upload by a user?"><i class= "fas fa-trash"></i> Delete&nbsp</a></div>';
+        print '<div><a href= "'.base_url().'admin/delete_pending_books/'.$book->id.'" title= "Delete" class="btn btn-danger btn-sm delete" data-confirm = "Are you sure to delete this book?"> Delete&nbsp</a></div>';
         print '</td>'; 
       ?>
     </tr>

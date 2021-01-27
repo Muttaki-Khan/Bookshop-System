@@ -23,6 +23,9 @@
         <div class="login-form">
             <div class="form-header">Login Form</div>
             <div class="row">
+                <div class="col-lg-3">
+                    
+                </div>
                 <div class="col-lg-6">
                 <?= form_open('users/login');?>
                     <div class="form-group">
@@ -36,7 +39,6 @@
                         <label for="password"><b>Password</b></label>
 
                         <?= form_password(['name'=>'password','placeholder'=>'Enter your password','value'=> '', 'class'=>'form-control']);?>
-                        <small><a href="#">Forget password</a></small>
 
                         <?= form_error('password', '<div class="text-danger">','</div>'); ?>
 
@@ -57,11 +59,8 @@
                 <?= form_close();?>
                 </div>
                 <!--=== Login with social apps ===-->
-                <div class="col-lg-6">
-                    <div class="login-with">
-                        <span><a href="#" class="btn btn-primary fb"><i class="fab fa-facebook-f"></i> Login with Facebook</a></span><br><br>
-                        <span><a href="#" class="btn btn-outline-danger"><i class="fab fa-google"></i> Login with Google &nbsp</a></span>
-                    </div>
+                <div class="col-lg-3">
+                    
                 </div>
             </div>
         </div>

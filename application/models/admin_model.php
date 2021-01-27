@@ -109,68 +109,17 @@ class admin_model extends CI_Model
 			'categoryId' => $this->input->post('categoryId'),
 			'book_image' => $image_path,
 			'userId' => $this->session->userdata('id'),
-			'status' => $this->input->post('status')
+			'status' => $this->input->post('status'),
+			'bookstatus' => $this->input->post('bookstatus')
 		);
 
 		$insert_book = $this->db->insert('books', $data);
 		echo $this->db->last_query();
 		return $insert_book;
 	}
-    #...Delete book
-	public function delete_usedbook($id)
-	{
-		$this->db->where('id', $id);
-		$this->db->delete('usedbooks');
-	}
-#...Add Used books
-	public function add_usedbooks()
-	{
-		$data = $this->upload->data();
-		$image_path = base_url("uploads/image/".$data['raw_name'].$data['file_ext']);
-		
-		$data = array(
-			'book_name' => $this->input->post('book_name'),
-			'description' => $this->input->post('description'),
-			'author' => $this->input->post('author'),
-			'publisher' => $this->input->post('publisher'),
-			'price' => $this->input->post('price'),
-			'quantity' => $this->input->post('quantity'),
-			'categoryId' => $this->input->post('categoryId'),
-			'book_image' => $image_path,
-			'userId' => $this->session->userdata('id'),
-		);
 
-		$insert_book = $this->db->insert('usedbooks', $data);
-		return $insert_book;
-	}
-    #...Display book details
-	public function get_usedbook_detail($id)
-	{
-		/*=== SQL join ===*/
-		$this->db->select('usedbooks.*, users.name, category.category');
-		$this->db->from('usedbooks');
-		$this->db->join('category', 'usedbooks.categoryId = category.id');
-		$this->db->join('users', 'usedbooks.userId = users.id'); // Join 3rd table
 
-		$this->db->where('usedbooks.id', $id);
-		$query = $this->db->get();
-		return $query->row();		
-	}
-#...Display all USED books
-	public function get_usedbooks($limit, $offset)
-	{	
-		/*=== SQL join ===*/
-		$this->db->select('usedbooks.id, usedbooks.book_name, usedbooks.description, usedbooks.author, usedbooks.publisher, usedbooks.quantity, usedbooks.price, usedbooks.book_image, category.category, users.name');
-
-		$this->db->from('usedbooks');
-		$this->db->join('category', 'usedbooks.categoryId = category.id');
-		$this->db->join('users', 'usedbooks.userId = users.id'); // Join 3rd table
-
-		$this->db->order_by('usedbooks.id', 'DESC');
-		$this->db->limit($limit, $offset);
-		$query = $this->db->get();
-		return $query->result();
-	}
+    
 	#...Display all books
 	public function get_books($limit, $offset)
 	{	
@@ -199,6 +148,22 @@ class admin_model extends CI_Model
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
+
+
+
+	public function num_rows_admin_usedbooks()
+	{
+		$this->db->select('*');
+		$this->db->from('category');
+		$this->db->join('usedbooks', 'usedbooks.categoryId = category.id');
+
+		$this->db->order_by('usedbooks.id', 'DESC');
+		$this->db->where('usedbooks.status', '1');
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+
 
 		#...Display best books
 	public function get_bestbooks($limit, $offset)
@@ -272,7 +237,8 @@ class admin_model extends CI_Model
 			'categoryId' => $this->input->post('categoryId'),
 			'book_image' => $image_path,
 			'userId' => $this->session->userdata('id'),
-			'status' => $this->input->post('status')
+			'status' => $this->input->post('status'),
+			'bookstatus' => $this->input->post('bookstatus')
 		);
 
 		return $query = $this->db->where('id', $id)->update('books', $data);
@@ -293,6 +259,7 @@ class admin_model extends CI_Model
 			'categoryId' => $this->input->post('categoryId'),
 			'book_image' => $image_path,
 			'userId' => $this->session->userdata('id'),
+			'status' => 1
 		);
 		return $query = $this->db->where('id', $id)->update('usedbooks', $data);
 	}
@@ -304,6 +271,11 @@ class admin_model extends CI_Model
 		$this->db->delete('books');
 	}
 
+	public function delete_usedbook($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('usedbooks');
+	}
 
 	#...Get pending books
 	public function pending_books()
