@@ -125,6 +125,20 @@ class User_home extends CI_Controller {
 		$this->load->view('layouts/user_home', $view);	
 	}
 
+		public function my_tborders()
+	{
+		/*=== LOAD DYNAMIC CATAGORY ===*/
+		$this->load->model('admin_model');
+		$view['category'] = $this->admin_model->get_category();
+		/*==============================*/
+
+		$this->load->model('user_model');
+		$view['tborders'] = $this->user_model->my_tborders();
+
+		$view['user_view'] = "users/mytbOrders";
+		$this->load->view('layouts/user_home', $view);	
+	}
+
 	public function order_view($orderId)
 	{
 		/*=== LOAD DYNAMIC CATAGORY ===*/
