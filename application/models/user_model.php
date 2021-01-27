@@ -285,6 +285,18 @@ public function my_orders()
 	$query = $this->db->get('orders');
 	return $query->result();
 }
+
+public function my_tborders()
+{
+	$this->db->order_by('tborderId', 'DESC');
+	$this->db->where('userIdfirst', $this->session->userdata('id'));
+	$this->db->or_where('userIdsecond', $this->session->userdata('id'));
+	$this->db->or_where('userIdthird', $this->session->userdata('id'));
+	$query = $this->db->get('tborders');
+	return $query->result();
+}
+
+
 public function my_reviews()
 {
 	$this->db->order_by('id', 'DESC');

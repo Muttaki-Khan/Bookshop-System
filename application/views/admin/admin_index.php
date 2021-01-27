@@ -110,10 +110,13 @@
 			</div>
 			<br>
 			<div class="row">
-				<div class="col-6 col-md-4">
+				<div class="col-lg-2 col-md-3 col-sm-4">
+
+				</div>
+				<div class="col-lg-2 col-md-3 col-sm-4">
 					
 				</div>
-				<div class="col-6 col-md-4">
+				<div class="col-lg-2 col-md-3 col-sm-4">
 					<div class="col-admin bg-primary clickable-div" data-href="<?= base_url('admin/bestbooks')?>">
 						<div>
 							<i class="fas fa-book"></i>
@@ -121,8 +124,13 @@
 						</div> 
 					</div>
 				</div>
-				<div class="col-6 col-md-4">
-					
+				<div class="col-lg-2 col-md-3 col-sm-4">
+					<div class="col-admin bg-danger clickable-div" data-href="<?= base_url('#')?>">
+						<div>
+							<i class="fas fa-shopping-cart"></i>
+							<h6>Show 3B Sharing Orders</h6>
+						</div> 
+					</div>
 				</div>
 			</div>
 		</div>
