@@ -56,7 +56,7 @@ if($this->session->flashdata('success'))
 			print "</tr>";
 
 			print "<tr>";
-			$shipping = 40;
+			$shipping = 15;
 			print "<th>Shipping cost</th>";
 			print "<td colspan = '2'>".$shipping.".TK</td>";
 			print "</tr>";

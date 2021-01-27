@@ -339,6 +339,13 @@ class admin_model extends CI_Model
 		return $query->result();
 	}
 
+	public function get_tborders()
+	{
+		$this->db->order_by('tborderId', 'DESC');
+		$query = $this->db->get('tborders');
+		return $query->result();
+	}
+
 	#...Get order details
 	public function get_order_detail($orderId)
 	{

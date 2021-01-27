@@ -125,7 +125,7 @@
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-3 col-sm-4">
-					<div class="col-admin bg-danger clickable-div" data-href="<?= base_url('#')?>">
+					<div class="col-admin bg-danger clickable-div" data-href="<?= base_url('admin/tborders')?>">
 						<div>
 							<i class="fas fa-shopping-cart"></i>
 							<h6>Show 3B Sharing Orders</h6>
