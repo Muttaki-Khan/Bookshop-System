@@ -385,6 +385,15 @@ class admin_model extends CI_Model
 		$query = $this->db->get('orders');
 		return $query->result();
 	}
+
+	#...Get all 3B orders ready to deliver
+	public function get_tborders_to_deliver()
+	{
+		$this->db->order_by('tborderId', 'DESC');
+		$this->db->where('usercount', '3');
+		$query = $this->db->get('tborders');
+		return $query->result();
+	}
 	#...Confirm order delivery
 	public function confirm_delivery($orderId, $data)
 	{
@@ -396,7 +405,7 @@ class admin_model extends CI_Model
 		return $query = $this->db->where('orderId', $orderId)->update('orders', $data);
 	}
 
-	#...cencle order delivery
+	#...cancel order delivery
 	public function cancle_delivery($orderId, $data)
 	{
 		
@@ -405,6 +414,28 @@ class admin_model extends CI_Model
 		);
 
 		return $query = $this->db->where('orderId', $orderId)->update('orders', $data);
+	}
+
+	#...Confirm tborder delivery
+	public function tbconfirm_delivery($tborderId, $data)
+	{
+		
+		$data = array(
+			'del_status' => 1
+		);
+
+		return $query = $this->db->where('tborderId', $tborderId)->update('tborders', $data);
+	}
+
+	#...cancel tborder delivery
+	public function tbcancel_delivery($tborderId, $data)
+	{
+		
+		$data = array(
+			'del_status' => 0
+		);
+
+		return $query = $this->db->where('tborderId', $tborderId)->update('tborders', $data);
 	}
 
 	#admin details
