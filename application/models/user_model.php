@@ -244,20 +244,21 @@ class user_model extends CI_Model
 			$idcheck = $check2+0;
 
 			if ($idcheck!=0) {
-				$updatequery2 = "UPDATE tborders SET userIdthird = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
-				$confirmation = $this->db->query($updatequery2, array($this->session->userdata('id'), $usc, $tempcity, $id));
+				$updatequery2 = "UPDATE tborders SET userIdthird = ?, namethird = ?, contactthird = ?, addressthird = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
+				$confirmation = $this->db->query($updatequery2, array($this->session->userdata('id'), $this->input->post('name'), $this->input->post('contact'), $this->input->post('address'), $usc, $tempcity, $id));
 				return $confirmation;
 			} else {
-				$updatequery = "UPDATE tborders SET userIdsecond = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
-				$confirmation = $this->db->query($updatequery, array($this->session->userdata('id'), $usc, $tempcity, $id));
+				$updatequery = "UPDATE tborders SET userIdsecond = ?, namesecond = ?, contactsecond = ?, addresssecond = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
+				$confirmation = $this->db->query($updatequery, array($this->session->userdata('id'), $this->input->post('name'), $this->input->post('contact'), $this->input->post('address'), $usc, $tempcity, $id));
 				return $confirmation;
 			}
 			
 		} else {
 			$data = array(
 				'userIdfirst'	=> $this->session->userdata('id'),
-				/*	'userIdsecond'	=> $this->session->userdata('id'),*/
-				/*	'userIdthird'	=> $this->session->userdata('id'),*/
+				'namefirst'		=> $this->input->post('name'),
+				'contactfirst' 	=> $this->input->post('contact'),
+				'addressfirst'	=> $this->input->post('address'),
 				'city' 		=> $this->input->post('city'),
 				'tbpricewithshp' => $total_price,
 				'usercount' => $usc,
