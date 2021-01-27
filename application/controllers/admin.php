@@ -506,6 +506,15 @@ class admin extends CI_Controller {
 		$this->load->view('layouts/admin_layout', $view);
 	}
 
+	public function tbready_to_deliver()
+	{
+		$this->load->model('admin_model');
+		$view['tborders'] = $this->admin_model->get_tborders_to_deliver();
+
+		$view['admin_view'] = "admin/tbready_to_deliver";
+		$this->load->view('layouts/admin_layout', $view);
+	}
+
 	public function delivery_details($orderId)
 	{
 		$this->load->model('admin_model');
@@ -531,6 +540,17 @@ class admin extends CI_Controller {
 		{
 			$this->session->set_flashdata('success','Order number '.$this->uri->segment(3).' is delivered successfully');
 			redirect('admin/ready_to_deliver');
+		}
+	}
+
+	#...tbConfirm delivery
+	public function tbconfirm_delivery($tborderId)
+	{
+		$this->load->model('admin_model');
+		if($this->admin_model->tbconfirm_delivery($tborderId, $data))
+		{
+			$this->session->set_flashdata('success','This order is delivered successfully');
+			redirect('admin/tbready_to_deliver');
 		}
 	}
 

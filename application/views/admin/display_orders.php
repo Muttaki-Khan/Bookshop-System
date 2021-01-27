@@ -58,6 +58,6 @@
 	<?php endforeach; ?>
   </tbody>
 </table>
-<div class="section-padding"><h6><a href="<?= base_url('admin/ready_to_deliver')?>" class="text-primary"><i class="fas fa-truck"></i> Orders ready to deliver</a></h6></div>
+<div class="section-padding"><h6><a href="<?= base_url('admin/ready_to_deliver')?>" class="text-primary"><i class="fas fa-truck"></i> Manage Orders that are ready to be delivered</a></h6></div>
 </div>
 </div>

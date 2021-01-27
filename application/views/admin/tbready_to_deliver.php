@@ -6,8 +6,8 @@
     }
 ?>
 <br>
-<div class="container-fluid">
-	<div id="table-header">all 3b sharing orders</div>
+<div class="container-fluid" style="min-height: 500px">
+	<div id="table-header">orders ready to deliver</div>
   <div class="table-responsive-sm">
 	<table class="table table-hover">
   <thead class="thead-light">
@@ -26,6 +26,7 @@
       <th scope="col">Shipping city</th>
       <th scope="col">Order Date</th>
       <th scope="col">Orders Status</th>
+      <th scope="col">Set Delivery Status</th>
     </tr>
   </thead>
 
@@ -51,27 +52,27 @@
       <?php print '<td><span>'.strip_tags($tborder->city).'</span></td>'; ?>
       
       <?php print '<td>'.date('h:i a, d-M y', strtotime($tborder->dateTime)).'</td>'; ?>
-
+      
       <?php 
-      if($tborder->usercount == 3 && $tborder->del_status == 0)
+      if($tborder->del_status == 1)
       { 
-        $status = '<span class = "text-success">Ready to Deliver</span>';
-      }
-      elseif ($tborder->usercount == 3 && $tborder->del_status == 1) {
-        $status = '<span class = "text-success">Delivered</span>';
+        $tborder->del_status = '<span class = "text-success">Delivered</span>';
       }
       else
       {
-        $status = '<span class = "text-danger">Buyer required</span>';
+        $tborder->del_status = '<span class = "text-danger">Ready to deliver</span>';
       }
-      print '<td>'.$status.'</td>';
+      print '<td>'.$tborder->del_status.'</td>';
        
       ?>
-
+  
+      <?php print '<td>';
+        print '<a href= "'.base_url().'admin/tbconfirm_delivery/'.$tborder->tborderId.'" title= "Delivered" class="btn btn-success btn-sm confirm-alert" data-confirm = "Are you sure to confirm this order delivery.?">Delivered</a>&nbsp';
+        print '</td>'; 
+      ?>
     </tr>
 	<?php endforeach; ?>
   </tbody>
 </table>
-<div class="section-padding"><h6><a href="<?= base_url('admin/tbready_to_deliver')?>" class="text-primary"><i class="fas fa-truck"></i>  Manage 3B sharing orders that are ready to be delivered</a></h6></div>
 </div>
 </div>
