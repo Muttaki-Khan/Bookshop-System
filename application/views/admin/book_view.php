@@ -24,9 +24,21 @@
 						print "Status: <span class = 'text-danger'>Unpublished</span>";
 					}
 					?>		
+				</div>
+				<div>
+					<?php
+					if($book_detail->bookstatus == '1')
+					{
+						print "Book state: <span class = 'text-success'>New</span>";
+					}
+					else
+					{
+						print "Book state: <span class = 'text-danger'>Used</span>";
+					}
+					?>		
 				</div><br>
 				<div class="text-success"><i class="fas fa-check-circle"></i> In stock: <?= strip_tags($book_detail->quantity)?></div>
-				<div>Price: <?= strip_tags($book_detail->price)?>.TK</div>
+				<div>Price: <?= strip_tags($book_detail->price)?>TK</div>
 				</div>
 			</div>
 			</div>
