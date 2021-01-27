@@ -62,7 +62,7 @@ class tborder extends CI_Controller {
 		$view['category'] = $this->admin_model->get_category();
 		/*==============================*/
 
-		$view['user_view'] = "users/place_order_page";
+		$view['user_view'] = "users/tbplace_order_page";
 		$this->load->view('layouts/user_layout', $view);
 	}
 

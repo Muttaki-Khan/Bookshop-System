@@ -47,6 +47,13 @@
                 print "<b>Orders: </b>You have placed ".$count." orders till now.";
                 ?>
             </div>
+            <div class="user-orders">
+                <?php 
+                $this->load->model('user_model');
+                $count = count($this->user_model->my_tborders());
+                print "<b>3B Sharing Orders: </b>You have placed '".$count."' 3B sharing orders for '".$count."' Books.";
+                ?>
+            </div>
             <div class="user-reviews">
                 <?php 
                 $this->load->model('user_model');
