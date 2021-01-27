@@ -81,9 +81,9 @@ class Cart extends CI_Controller {
 				{
 					$this->session->set_flashdata('error', '*This much quantity is not in stock.');
 				}*/
-				if($content['qty'] > 5 )
+				if($content['qty'] > 3 )
 				{
-					$this->session->set_flashdata('cart_error', '<i class="fas fa-exclamation-triangle"></i> You can not buy more than 5 books at a time');
+					$this->session->set_flashdata('cart_error', '<i class="fas fa-exclamation-triangle"></i> You can not buy more than 3 books at a time');
 				}
 				else
 				{
