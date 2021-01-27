@@ -18,6 +18,7 @@
             <li><a href="<?= base_url()?>admin/allusers"><i class="fas fa-users"></i> Users</a></li>
             <li><a href="<?= base_url()?>admin/orders"><i class="fas fa-cart-arrow-down"></i> Orders</a></li>
             <li><a href=""><i class="fas fa-layer-group"></i> Others</a></li>
+            <li><a href=""><i class="fas fa-cog"></i> Settings</a></li>
             <li><a href="<?= base_url()?>users/logout"><i class="fas fa-power-off"></i> Logout</a></li>
         </ul>
     </div>

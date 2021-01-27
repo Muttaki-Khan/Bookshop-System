@@ -8,15 +8,11 @@ if($this->session->flashdata('success'))
 <br>
 <div class="row">
 	<div class="col-lg-6">
-		<div id="table-header">shipping details</div>
-		<?= form_open('checkout')?>
+		<div id="table-header">Shipping details for 3B sharing order.</div>
+		<?= form_open(base_url('tborder/index/'.$data.'/'.$price))?>
 			<div class="form-group">
-				<?= form_input(['name'=>'name', 'placeholder'=>'Your Name...', 'value'=>set_value('name'), 'class'=>'form-control']) ?>
+				<?= form_input(['name'=>'name', 'placeholder'=>'Your Name', 'value'=>set_value('name'), 'class'=>'form-control']) ?>
 				<div class="text-danger form-error"><?= form_error('name')?></div>
-			</div>
-			<div class="form-group">
-				<?= form_input(['name'=>'email', 'placeholder'=>'Email...', 'value'=>set_value('email'), 'class'=>'form-control']) ?>
-				<div class="text-danger form-error"><?= form_error('email')?></div>
 			</div>
 			<div class="form-group">
 				<?= form_input(['name'=>'contact', 'placeholder'=>'Phone number...', 'value'=>set_value('contact'), 'class'=>'form-control']) ?>
@@ -25,10 +21,6 @@ if($this->session->flashdata('success'))
 			<div class="form-group">
 				<?= form_textarea(['name'=>'address', 'placeholder'=>'Shipping address...',  'value'=>set_value('address'), 'class'=>'form-control', 'rows'=>'5'])?>
 				<div class="text-danger form-error"><?= form_error('address')?></div>
-			</div>
-			<div class="form-group">
-				<?= form_input(['name'=>'zipcode', 'placeholder'=>'Zip code / Post code...', 'value'=>set_value('zipcode'), 'class'=>'form-control']) ?>
-				<div class="text-danger form-error"><?= form_error('zipcode')?></div>
 			</div>
 			<div class="form-group">
 				<?= form_input(['name'=>'city', 'placeholder'=>'City...', 'value'=>set_value('city'), 'class'=>'form-control']) ?>
@@ -59,8 +51,8 @@ if($this->session->flashdata('success'))
 			print "<table class = 'table'>";
 
 			print "<tr>";
-			print "<th>Total Book Price</th>";
-			print "<td colspan = '2'>".$this->cart->total().".TK</td>";
+			print "<th>Book Price (3B Sharing)</th>";
+			print "<td colspan = '2'>".$price.".TK</td>";
 			print "</tr>";
 
 			print "<tr>";
@@ -70,37 +62,10 @@ if($this->session->flashdata('success'))
 			print "</tr>";
 
 			print "<tr>";
-			$payable_total = $this->cart->total() + $shipping;
+			$payable_total = $price + $shipping;
 			print "<th>Total cost</th>";
 			print "<td colspan = '2'>".$payable_total.".TK</td>";
 			print "</tr>";
-			
-			print "</table>";
-			
-			print "<h5>Your Products</h5>";
-			print "<table class = 'table border-bottom table-hover'>";
-			print "<tr>";
-			print "<th>Image</th><th>Book Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th>";
-			print "</tr>";
-			foreach ($this->cart->contents() as $books) 
-			{
-				print "<tr>";
-				print "<td><img src = '".$books['book_image']."' alt = '' width='50' height='80'</td>";
-				print "<td>";
-				print $books['name'];
-				print "</td>";
-				print "<td>";
-				print $books['qty'];
-				print "</td>";
-				print "<td>";
-				print $books['price'];
-				print ".TK</td>";
-				print "<td>";
-				print $books['subtotal'];
-				print ".TK</td>";
-				print "</tr>";
-			}
-
 			print "</table>";
 		?>
 	</div>

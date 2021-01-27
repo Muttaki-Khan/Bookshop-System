@@ -10,12 +10,12 @@ class user_model extends CI_Model
 
 		$data = array(
 
-		'name'	=> $this->input->post('name'),
-		'contact'	=> $this->input->post('contact'),
-		'email'	=> $this->input->post('email'),
-		'address'	=> $this->input->post('address'),
-		'city'	=> $this->input->post('city'),
-		'password' => $encripted_pass
+			'name'	=> $this->input->post('name'),
+			'contact'	=> $this->input->post('contact'),
+			'email'	=> $this->input->post('email'),
+			'address'	=> $this->input->post('address'),
+			'city'	=> $this->input->post('city'),
+			'password' => $encripted_pass
 
 		);
 
@@ -93,7 +93,7 @@ class user_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('category');
 		$this->db->join('books', 'books.categoryId = category.id');
-	
+
 		$this->db->order_by('books.id', 'DESC');
 		$this->db->where('books.status', 1);
 		$query = $this->db->get();
@@ -198,111 +198,166 @@ class user_model extends CI_Model
 			$q[] = $items['qty'];
 			$quantity = implode(', ', $q);
 
-		$data = array(
-			'userId'	=> $this->session->userdata('id'),
-			'ship_name'		=> $this->input->post('name'),
-			'address'	=> $this->input->post('address'),
-			'city' 		=> $this->input->post('city'),
-			'email'		=> $this->input->post('email'),
-			'contact' 	=> $this->input->post('contact'),
-			'zipcode'	=> $this->input->post('zipcode'),
-			'paymentcheck' => $this->input->post('paymentcheck'),
-			'total_price' => $total_price,
-			'bookId' => $books,
-			'quantity' => $quantity
+			$data = array(
+				'userId'	=> $this->session->userdata('id'),
+				'ship_name'		=> $this->input->post('name'),
+				'address'	=> $this->input->post('address'),
+				'city' 		=> $this->input->post('city'),
+				'email'		=> $this->input->post('email'),
+				'contact' 	=> $this->input->post('contact'),
+				'zipcode'	=> $this->input->post('zipcode'),
+				'paymentcheck' => $this->input->post('paymentcheck'),
+				'total_price' => $total_price,
+				'bookId' => $books,
+				'quantity' => $quantity
 
-		);
-		$query = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
-		$this->db->query($query, array($items['qty'], $items['id']));
+			);
+			$query = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
+			$this->db->query($query, array($items['qty'], $items['id']));
 
-	}
+		}
 
 		$insert_order = $this->db->insert('orders', $data);
 		return $insert_order;
 
 	}
 
-	public function my_orders()
+	public function add_tborders($id,$price)
 	{
-		$this->db->order_by('orderId', 'DESC');
-		$this->db->where('userId', $this->session->userdata('id'));
-		$query = $this->db->get('orders');
-		return $query->result();
-	}
-	public function my_reviews()
-	{
-		$this->db->order_by('id', 'DESC');
-		$this->db->where('userId', $this->session->userdata('id'));
-		$query = $this->db->get('reviews');
-		return $query->result();
+		/*==============================*/
+		$shipping = 40;
+		$total_price = $price+ $shipping;
+		$usc = 1;
+		$tempcity = $this->input->post('city');
+		$idcheck = 0;
+
+		/*$query1 = "SELECT userIdfirst FROM tborders WHERE city = ? AND usercount < 3 AND bookId = ?";*/
+		$query1 = "SELECT userIdfirst FROM tborders 
+		WHERE city = ? AND usercount < 3 AND bookId = ?";
+		$check1 = $this->db->query($query1, array($tempcity,$id));
+
+		if ($check1->num_rows() >= 1 ) {
+			$query2 = "SELECT userIdsecond FROM tborders WHERE city = ? AND usercount < 3 AND bookId = ?";
+			$check2 = $this->db->query($query2, array($tempcity,$id));
+			$check2 = $check2->row();
+			$check2 = $check2->userIdsecond;
+			$idcheck = $check2+0;
+
+			if ($idcheck!=0) {
+				$updatequery2 = "UPDATE tborders SET userIdthird = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
+				$confirmation = $this->db->query($updatequery2, array($this->session->userdata('id'), $usc, $tempcity, $id));
+				return $confirmation;
+			} else {
+				$updatequery = "UPDATE tborders SET userIdsecond = ?, usercount = usercount + ? WHERE city = ? AND usercount < 3 AND bookId = ?";
+				$confirmation = $this->db->query($updatequery, array($this->session->userdata('id'), $usc, $tempcity, $id));
+				return $confirmation;
+			}
+			
+		} else {
+			$data = array(
+				'userIdfirst'	=> $this->session->userdata('id'),
+				/*	'userIdsecond'	=> $this->session->userdata('id'),*/
+				/*	'userIdthird'	=> $this->session->userdata('id'),*/
+				'city' 		=> $this->input->post('city'),
+				'tbpricewithshp' => $total_price,
+				'usercount' => $usc,
+				'bookId' => $id
+
+			);
+		/*==============================
+		$query = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
+		$this->db->query($query, array($items['qty'], $items['id']));
+*/
+
+		$insert_order = $this->db->insert('tborders', $data);
+		return $insert_order;
 	}
 
-	public function my_published_books()
-	{
-		$this->db->where('userId', $this->session->userdata('id'));
-		$this->db->where('status', '1');
-		$query = $this->db->get('books');
-		return $query->result();
-	}
+}
+
+
+
+public function my_orders()
+{
+	$this->db->order_by('orderId', 'DESC');
+	$this->db->where('userId', $this->session->userdata('id'));
+	$query = $this->db->get('orders');
+	return $query->result();
+}
+public function my_reviews()
+{
+	$this->db->order_by('id', 'DESC');
+	$this->db->where('userId', $this->session->userdata('id'));
+	$query = $this->db->get('reviews');
+	return $query->result();
+}
+
+public function my_published_books()
+{
+	$this->db->where('userId', $this->session->userdata('id'));
+	$this->db->where('status', '1');
+	$query = $this->db->get('books');
+	return $query->result();
+}
 
 
 	##...Get all E-books and filter category wise E-books
-	public function get_ebooks()
+public function get_ebooks()
+{
+	/*=== SQL join and Data filter ===*/
+	$this->db->select('*');
+	$this->db->from('category');
+	$this->db->join('ebooks', 'ebooks.categoryId = category.id');
+	if(isset($_GET['ctg']))
 	{
-		/*=== SQL join and Data filter ===*/
-		$this->db->select('*');
-		$this->db->from('category');
-		$this->db->join('ebooks', 'ebooks.categoryId = category.id');
-		if(isset($_GET['ctg']))
-		{
-			$a = $_GET['ctg'];
-			$query = $this->db->where('category.tag', $a);
-			$this->db->order_by('ebooks.id', 'DESC');
-			$query = $this->db->get();
-			return $query->result();
-		}
+		$a = $_GET['ctg'];
+		$query = $this->db->where('category.tag', $a);
 		$this->db->order_by('ebooks.id', 'DESC');
 		$query = $this->db->get();
 		return $query->result();
 	}
+	$this->db->order_by('ebooks.id', 'DESC');
+	$query = $this->db->get();
+	return $query->result();
+}
 
 
-	public function search($query)
-	{
-		$this->db->order_by('id', 'DESC');
-		$this->db->from('books');
+public function search($query)
+{
+	$this->db->order_by('id', 'DESC');
+	$this->db->from('books');
 
-		$string = str_replace(" ","|", $query);
-		$this->db->where("book_name RLIKE '$string'");
+	$string = str_replace(" ","|", $query);
+	$this->db->where("book_name RLIKE '$string'");
 
-		$this->db->where('status', 1);
-		$q = $this->db->get();
-		return $q->result();
-	}
+	$this->db->where('status', 1);
+	$q = $this->db->get();
+	return $q->result();
+}
 
-	public function get_user_details($id)
-	{
-		$this->db->where('id', $id);
-		$query = $this->db->get('users');
-		return $query->row();
-	}
+public function get_user_details($id)
+{
+	$this->db->where('id', $id);
+	$query = $this->db->get('users');
+	return $query->row();
+}
 
-	public function edit_profile($id, $data)
-	{
-		$options = ['cost'=> 12];
-		$encripted_pass = password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options);
+public function edit_profile($id, $data)
+{
+	$options = ['cost'=> 12];
+	$encripted_pass = password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options);
 
-		$data = array(
+	$data = array(
 		'name'	=> $this->input->post('name'),
 		'contact'	=> $this->input->post('contact'),
 		'address'	=> $this->input->post('address'),
 		'city'	=> $this->input->post('city'),
 		'password' => $encripted_pass,
 
-		);
+	);
 
-		return $query = $this->db->where('id', $id)->update('users', $data);
-	}
+	return $query = $this->db->where('id', $id)->update('users', $data);
+}
 
 
 } 
