@@ -302,17 +302,16 @@ class user_model extends CI_Model
 				'bookId' => $id
 
 			);
-		/*==============================
-		$query = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
-		$this->db->query($query, array($items['qty'], $items['id']));
-*/
+		$sc = 1;
+		$querycount = "UPDATE books SET sales_counter = sales_counter + ? WHERE id = ?";
+		$this->db->query($querycount, array($sc, $id));
+
 
 		$insert_order = $this->db->insert('tborders', $data);
 		return $insert_order;
 	}
 
 }
-
 
 
 public function my_orders()

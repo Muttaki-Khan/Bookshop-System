@@ -1,28 +1,20 @@
-<!--=== Success msg ===-->
-<?php 
-    if($this->session->flashdata('success'))
-    {
-        print '<div class= "success-msg">'.$this->session->flashdata('success').'</div>';
-    }
-?>
 <br>
-<div class="container-fluid">
-	<div id="table-header">all 3b sharing orders</div>
-  <div class="table-responsive-sm">
-	<table class="table table-hover">
-  <thead class="thead-light">
+<?php $this->load->model('user_model'); ?>
+<?php if($this->user_model->my_tborders()): ?>
+
+	<div id="table-header">My 3B sharing orders</div>
+  <div class="table-responsive-sm table-responsive-md">
+	<table class="table">
+  <thead class="">
     <tr>
       <th scope="col">3B ID</th>
       <th scope="col">Book ID</th>
       <th scope="col">Buyer 1</th>
       <th scope="col">Buyer 1 contact</th>
-      <th scope="col">Buyer 1 address</th>
       <th scope="col">Buyer 2</th>
       <th scope="col">Buyer 2 contact</th>
-      <th scope="col">Buyer 2 address</th>
       <th scope="col">Buyer 3</th>
       <th scope="col">Buyer 3 contact</th>
-      <th scope="col">Buyer 3 address</th>
       <th scope="col">Paid per person</th>
       <th scope="col">Shipping city</th>
       <th scope="col">Order Date</th>
@@ -32,22 +24,19 @@
 
 
   <tbody>
-  	<?php foreach($tborders as $tborder): ?>
+  	   <?php foreach($tborders as $tborder): ?>
     <tr>
       <?php print '<td>'.$tborder->tborderId.'</td>'; ?>
       <?php print '<td><span>'.strip_tags($tborder->bookId).'</span></td>'; ?>
 
       <?php print '<td><span>'.substr(strip_tags($tborder->namefirst), 0, 100).'</span></td>'; ?>
       <?php print '<td><span>'.strip_tags($tborder->contactfirst).'</span></td>'; ?>
-      <?php print '<td><span>'.strip_tags($tborder->addressfirst).'</span></td>'; ?>
 
       <?php print '<td><span>'.substr(strip_tags($tborder->namesecond), 0, 100).'</span></td>'; ?>
       <?php print '<td><span>'.strip_tags($tborder->contactsecond).'</span></td>'; ?>
-      <?php print '<td><span>'.strip_tags($tborder->addresssecond).'</span></td>'; ?>
 
       <?php print '<td><span>'.substr(strip_tags($tborder->namethird), 0, 100).'</span></td>'; ?>
       <?php print '<td><span>'.strip_tags($tborder->contactthird).'</span></td>'; ?>
-      <?php print '<td><span>'.strip_tags($tborder->addressthird).'</span></td>'; ?>
 
       <?php print '<td><span>'.strip_tags($tborder->tbpricewithshp).'.TK</span></td>'; ?>
       <?php print '<td><span>'.strip_tags($tborder->city).'</span></td>'; ?>
@@ -71,9 +60,12 @@
       ?>
 
     </tr>
-	<?php endforeach; ?>
+  <?php endforeach; ?>
   </tbody>
 </table>
-<div class="section-padding"><h6><a href="<?= base_url('admin/tbready_to_deliver')?>" class="text-primary"><i class="fas fa-truck"></i>  Manage 3B sharing orders that are ready to be delivered</a></h6></div>
 </div>
-</div>
+
+<?php else: ?>
+  <div class="error-msg"><?php print "You did not order any book yet. You can order books from here. "?>
+  <a href="<?= base_url()?>users/all_books" class="text-primary"><b>Order your books</b></a> now.</div><br>
+<?php endif; ?>
