@@ -65,6 +65,31 @@ class user_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	##...Get all best books and filter category wise books
+	public function get_bestbooks($limit, $offset)
+	{
+		/*=== SQL join and Data filter ===*/
+		$this->db->select('*');
+		$this->db->from('category');
+		$this->db->join('books', 'books.categoryId = category.id');
+		if(isset($_GET['ctg']))
+		{
+			$a = $_GET['ctg'];
+			$query = $this->db->where('category.tag', $a);
+			$this->db->order_by('books.sales_counter', 'DESC');
+			$this->db->where('books.status', 1);
+			$this->db->limit($limit, $offset);
+			$query = $this->db->get();
+			return $query->result();
+		}
+		$this->db->order_by('books.sales_counter', 'DESC');
+		$this->db->where('books.status', 1);
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
     ##...Get all used books and filter category wise books
 	public function get_usedbooks($limit, $offset)
 	{
@@ -95,6 +120,18 @@ class user_model extends CI_Model
 		$this->db->join('books', 'books.categoryId = category.id');
 
 		$this->db->order_by('books.id', 'DESC');
+		$this->db->where('books.status', 1);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+	#...For Best sellers pagination
+	public function num_rows_bestbooks()
+	{
+		$this->db->select('*');
+		$this->db->from('category');
+		$this->db->join('books', 'books.categoryId = category.id');
+
+		$this->db->order_by('books.sales_counter', 'DESC');
 		$this->db->where('books.status', 1);
 		$query = $this->db->get();
 		return $query->num_rows();
