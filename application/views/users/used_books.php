@@ -1,4 +1,4 @@
-<br><div id="table-header">Buy Books
+<br><div id="table-header">Buy Used Books
 <!--=== for category name as title ===-->
 <?php foreach($category as $ctg): ?>
 <?php 

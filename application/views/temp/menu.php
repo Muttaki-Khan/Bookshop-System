@@ -25,6 +25,7 @@
                         <ul id="nav">
                             <li><a href="<?= base_url()?>home">Home</a></li>
                             <li><a href="<?= base_url()?>users/best-books">Best Sellers</a></li>
+                            <li><a href="<?= base_url()?>users/used-books">Used Books</a></li>
                             <li><a href="<?= base_url()?>users/all-books">All Books</a></li>
                             
                             

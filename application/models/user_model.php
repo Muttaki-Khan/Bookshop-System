@@ -96,18 +96,19 @@ class user_model extends CI_Model
 		/*=== SQL join and Data filter ===*/
 		$this->db->select('*');
 		$this->db->from('category');
-		$this->db->join('usedbooks', 'usedbooks.categoryId = category.id');
+		$this->db->join('books', 'books.categoryId = category.id');
 		if(isset($_GET['ctg']))
 		{
 			$a = $_GET['ctg'];
 			$query = $this->db->where('category.tag', $a);
-			$this->db->order_by('usedbooks.id', 'DESC');
-			$this->db->where('usedbooks.status', 1);
+			$this->db->order_by('books.id', 'DESC');
+			$this->db->where('books.bookstatus', 2);
 			$this->db->limit($limit, $offset);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		$this->db->order_by('usedbooks.id', 'DESC');
+		$this->db->order_by('books.id', 'DESC');
+		$this->db->where('books.bookstatus', 2);
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		return $query->result();
