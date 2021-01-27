@@ -225,7 +225,7 @@ class user_model extends CI_Model
 	public function add_tborders($id,$price)
 	{
 		/*==============================*/
-		$shipping = 40;
+		$shipping = 15;
 		$total_price = $price+ $shipping;
 		$usc = 1;
 		$tempcity = $this->input->post('city');

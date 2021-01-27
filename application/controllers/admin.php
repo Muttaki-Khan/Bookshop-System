@@ -446,6 +446,15 @@ class admin extends CI_Controller {
 		$this->load->view('layouts/admin_layout', $view);
 	}
 
+	public function tborders()
+	{
+		$this->load->model('admin_model');
+		$view['tborders'] = $this->admin_model->get_tborders();
+
+		$view['admin_view'] = "admin/display_tborders";
+		$this->load->view('layouts/admin_layout', $view);
+	}
+
 	#...Display Order Details
 	public function order_view($orderId)
 	{
